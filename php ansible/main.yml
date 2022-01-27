@@ -1,0 +1,27 @@
+---
+- name: "Downloading PHP"
+  get_url:
+    url: https://packages.sury.org/php/apt.gpg
+    dest: /etc/apt/trusted.gpg.d/php.gpg
+
+- name: "Adding Debian source PHP"
+  shell: | 
+    echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" |tee /etc/apt/sources.list.d/php.list
+
+- name: PHP | Install
+  apt:
+    update_cache: yes
+    name:
+      - "php{{ php_version }}"
+      - "php{{ php_version }}-cli"
+      - "php{{ php_version }}-fpm"
+      - "php{{ php_version }}-pdo"
+      - "php{{ php_version }}-gd"
+      - "php{{ php_version }}-curl"
+      - "php{{ php_version }}-bcmath"
+      - "php{{ php_version }}-intl"
+      - "php{{ php_version }}-mysql"
+      - "php{{ php_version }}-mbstring"
+      - "php{{ php_version }}-xml"
+      - "php{{ php_version }}-zip"
+    state: present
